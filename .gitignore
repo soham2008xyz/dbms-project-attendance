@@ -2,3 +2,9 @@
 .env.*.php
 .env.php
 .env
+
+# Bower
+bower_components/
+
+# GEdit
+*~

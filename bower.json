@@ -1,0 +1,35 @@
+{
+  "name": "dbms-project-attendance",
+  "version": "0.0.0",
+  "homepage": "https://github.com/soham2008xyz/dbms-project-attendance",
+  "description": "DBMS Project - Attendance Management System using PHP/Oracle 12",
+  "main": "index.php",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "php",
+    "oracle",
+    "bootstrap",
+    "html5",
+    "css3",
+    "attendance",
+    "pdo"
+  ],
+  "authors": [
+    "Soham Banerjee",
+    "Manu Narsaria",
+    "Shreya Pramanik"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "almasaeed2010/adminLTE#~2.0.5"
+  }
+}
