@@ -30,6 +30,8 @@
     "tests"
   ],
   "dependencies": {
-    "AdminLTE": "almasaeed2010/adminLTE#~2.0.5"
+    "AdminLTE": "almasaeed2010/adminLTE#~2.0.5",
+    "ionicons": "~2.0.1",
+    "font-awesome": "FortAwesome/Font-Awesome#~4.3.0"
   }
 }
