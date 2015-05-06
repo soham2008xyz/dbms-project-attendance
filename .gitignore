@@ -4,5 +4,7 @@
 .env
 
 # Bower
-
 bower_components/
+
+# GEdit
+*~
