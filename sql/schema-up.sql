@@ -4,56 +4,56 @@ CREATE TABLE teachers (
 	teacher_name VARCHAR2(50) NOT NULL,
 	teacher_email VARCHAR2(50), 
 	teacher_phone VARCHAR2(20),
-	CONSTRAINT teacher_id_pk PRIMARY KEY ( teacher_id )
+	CONSTRAINT teacher_id_pkey PRIMARY KEY ( teacher_id )
 );
 
 CREATE TABLE subjects (
 	subject_id NUMBER NOT NULL,
 	subject_name VARCHAR2(25) NOT NULL,
-	CONSTRAINT subject_id_pk PRIMARY KEY ( subject_id )
+	CONSTRAINT subject_id_pkey PRIMARY KEY ( subject_id )
 );
 
 CREATE TABLE batches (
 	batch_id NUMBER NOT NULL,
 	batch_year_passout NUMBER NOT NULL,
 	batch_stream VARCHAR2(25) NOT NULL,
-	CONSTRAINT batch_id_pk PRIMARY KEY ( batch_id )
+	CONSTRAINT batch_id_pkey PRIMARY KEY ( batch_id )
 );
 
 CREATE TABLE sections (
 	section_id NUMBER NOT NULL,
-	batch_id NUMBER NOT NULL CONSTRAINT batch_id_fkey REFERENCES batches(batch_id),
+	batch_id NUMBER NOT NULL CONSTRAINT sections_batch_id_fkey REFERENCES batches(batch_id),
 	section_name VARCHAR(3) NOT NULL,
-	CONSTRAINT section_id_pk PRIMARY KEY ( section_id )
+	CONSTRAINT section_id_pkey PRIMARY KEY ( section_id )
 );
 
 CREATE TABLE students (
 	student_id NUMBER NOT NULL,
-	section_id NUMBER NOT NULL CONSTRAINT section_id_fkey REFERENCES sections(section_id),
+	section_id NUMBER NOT NULL CONSTRAINT students_section_id_fkey REFERENCES sections(section_id),
 	semester NUMBER NOT NULL,
 	student_name VARCHAR2(50) NOT NULL,
 	student_email VARCHAR2(50) , 
 	student_phone VARCHAR2(20),
-	CONSTRAINT student_id_pk PRIMARY KEY ( student_id )
+	CONSTRAINT student_id_pkey PRIMARY KEY ( student_id )
 );
 
 CREATE TABLE schedules (
 	schedule_id NUMBER NOT NULL,
-	subject_id NUMBER NOT NULL CONSTRAINT subject_id_fkey REFERENCES subjects(subject_id),
-	teacher_id NUMBER NOT NULL CONSTRAINT teacher_id_fkey REFERENCES teachers(teacher_id),
-	section_id NUMBER NOT NULL CONSTRAINT section_id_fkey2 REFERENCES sections(section_id),
+	subject_id NUMBER NOT NULL CONSTRAINT schedules_subject_id_fkey REFERENCES subjects(subject_id),
+	teacher_id NUMBER NOT NULL CONSTRAINT schedules_teacher_id_fkey REFERENCES teachers(teacher_id),
+	section_id NUMBER NOT NULL CONSTRAINT schedules_section_id_fkey REFERENCES sections(section_id),
 	schedule_weekday VARCHAR2(25) NOT NULL,
 	schedule_period NUMBER NOT NULL, 
-	CONSTRAINT schedule_id_pk PRIMARY KEY ( schedule_id )
+	CONSTRAINT schedule_id_pkey PRIMARY KEY ( schedule_id )
 );
 
 CREATE TABLE attendance_records (
 	attendance_record_id NUMBER NOT NULL,
-	student_id NUMBER NOT NULL CONSTRAINT student_id_fkey REFERENCES students(student_id),
-	schedule_id NUMBER NOT NULL CONSTRAINT schedule_id_fkey REFERENCES schedules(schedule_id),
+	student_id NUMBER NOT NULL CONSTRAINT attendance_records_student_id_fkey REFERENCES students(student_id),
+	schedule_id NUMBER NOT NULL CONSTRAINT attendance_records_schedule_id_fkey REFERENCES schedules(schedule_id),
 	attendance_record_value NUMBER(1) DEFAULT 0,
 	attendance_record_date DATE NOT NULL,
-	CONSTRAINT attendance_id_pk PRIMARY KEY ( attendance_id )
+	CONSTRAINT attendance_id_pkey PRIMARY KEY ( attendance_id )
 );
 
 -- Sequences
@@ -164,12 +164,13 @@ CREATE OR REPLACE TRIGGER trig_a_record_autoincrement
 /
 
 -- Views
-CREATE OR REPLACE VIEW class_routine AS
+CREATE OR REPLACE VIEW all_class_routines AS
 	SELECT
 		schedules.section_id,
 		schedules.schedule_weekday,
 		schedules.schedule_period,
 		sections.section_name,
+		batches.batch_id,
 		batches.batch_stream,
 		subjects.subject_name,
 		teachers.teacher_name
@@ -184,53 +185,53 @@ CREATE OR REPLACE VIEW class_routine AS
 		ON teachers.teacher_id = schedules.teacher_id
 WITH READ ONLY;
 
-CREATE OR REPLACE VIEW teacher_routine AS
+CREATE OR REPLACE VIEW all_teacher_routines AS
 	SELECT
 		schedules.teacher_id,
 		schedules.schedule_weekday,
 		schedules.schedule_period,
-		teachers.t_name,
-		subjects.s_name,
-		sections.s_year,
-		sections.s_letter,
-		batches.stream
+		teachers.teacher_name,
+		subjects.subject_name,
+		sections.section_name,
+		batches.batch_id,
+		batches.batch_stream
 	FROM
 		schedules,
-		subjects,
-		batches,
-		teachers,
-		sections
-	WHERE schedules.teacher_id = teachers.teacher_id
-	AND subjects.subject_id = schedules.subject_id
-	AND schedules.section_id = sections.section_id
-	AND batches.batch_id = sections.batch_id
+	INNER JOIN subjects
+		ON schedules.subject_id = subjects.subject_id
+	INNER JOIN sections
+		ON schedules.section_id = sections.section_id
+	INNER JOIN batches
+		ON sections.batch_id = batches.batch_id
+	INNER JOIN teachers
+		ON schedules.teacher_id = teachers.teacher_id
 WITH READ ONLY;
 
 CREATE OR REPLACE VIEW attendance_list AS
-SELECT
-attendance_records.schedule_id,
-schedules.section_id,
-schedules.week_day,
-schedules.period,
-schedules.subject_id,
-subjects.s_name,
-students.s_name as student_name,
-teachers.t_name,
-attendance_records.student_id,
-attendance_records.attended,
-attendance_records.a_date
-FROM
-schedules,
-sections,
-subjects,
-teachers,
-attendance_records,
-students
-WHERE attendance_records.schedule_id = schedules.schedule_id
-AND attendance_records.student_id = students.student_id
-AND sections.section_id = schedules.section_id
-AND subjects.subject_id = schedules.subject_id
-AND teachers.teacher_id = schedules.teacher_id
+	SELECT
+		attendance_records.schedule_id,
+		schedules.section_id,
+		schedules.week_day,
+		schedules.period,
+		schedules.subject_id,
+		subjects.s_name,
+		students.s_name as student_name,
+		teachers.t_name,
+		attendance_records.student_id,
+		attendance_records.attended,
+		attendance_records.a_date
+	FROM
+	schedules,
+	sections,
+	subjects,
+	teachers,
+	attendance_records,
+	students
+	WHERE attendance_records.schedule_id = schedules.schedule_id
+	AND attendance_records.student_id = students.student_id
+	AND sections.section_id = schedules.section_id
+	AND subjects.subject_id = schedules.subject_id
+	AND teachers.teacher_id = schedules.teacher_id
 WITH READ ONLY;
 
 -- Procedures
