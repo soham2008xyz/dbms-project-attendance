@@ -31,7 +31,9 @@
   ],
   "dependencies": {
     "AdminLTE": "almasaeed2010/adminLTE#~2.0.5",
-    "ionicons": "~2.0.1",
-    "font-awesome": "FortAwesome/Font-Awesome#~4.3.0"
+    "ionicons": "~2.0.0",
+    "font-awesome": "FortAwesome/Font-Awesome#~4.3.0",
+    "html5shiv": "~3.7.2",
+    "respond": "~1.4.2"
   }
 }
