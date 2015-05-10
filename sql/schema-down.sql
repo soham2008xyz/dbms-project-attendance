@@ -11,4 +11,4 @@ drop SEQUENCE batches_batch_id_seq;
 drop SEQUENCE sections_section_id_seq;
 drop SEQUENCE students_student_id_seq;
 drop SEQUENCE schedules_schedule_id_seq;
-drop SEQUENCE attendance_rec_id_seq;
+drop SEQUENCE attendance_records_id_seq;
