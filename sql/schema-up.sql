@@ -1,41 +1,41 @@
 -- Tables
 CREATE TABLE teachers (
-	teacher_id NUMBER NOT NULL,
-	teacher_code VARCHAR2(3) NOT NULL,
-	teacher_name VARCHAR2(50) NOT NULL,
-	teacher_email VARCHAR2(50),
-	teacher_phone VARCHAR2(20),
-	CONSTRAINT teacher_id_pkey PRIMARY KEY ( teacher_id )
+	teacher_id	NUMBER		NOT NULL,
+	teacher_code	VARCHAR2(3)	NOT NULL,
+	teacher_name	VARCHAR2(50)	NOT NULL,
+	teacher_email	VARCHAR2(50),
+	teacher_phone	VARCHAR2(20),
+	CONSTRAINT	teacher_id_pkey	PRIMARY KEY ( teacher_id )
 );
 
 CREATE TABLE subjects (
-	subject_id NUMBER NOT NULL,
-	subject_code VARCHAR2(6) NOT NULL,
-	subject_name VARCHAR2(25) NOT NULL,
-	CONSTRAINT subject_id_pkey PRIMARY KEY ( subject_id )
+	subject_id	NUMBER		NOT NULL,
+	subject_code	VARCHAR2(6)	NOT NULL,
+	subject_name	VARCHAR2(25)	NOT NULL,
+	CONSTRAINT	subject_id_pkey	PRIMARY KEY ( subject_id )
 );
 
 CREATE TABLE batches (
-	batch_id NUMBER NOT NULL,
-	batch_year_passout NUMBER NOT NULL,
-	batch_stream VARCHAR2(25) NOT NULL,
-	CONSTRAINT batch_id_pkey PRIMARY KEY ( batch_id )
+	batch_id		NUMBER		NOT NULL,
+	batch_year_passout	NUMBER		NOT NULL,
+	batch_stream		VARCHAR2(25)	NOT NULL,
+	CONSTRAINT 		batch_id_pkey	PRIMARY KEY ( batch_id )
 );
 
 CREATE TABLE sections (
-	section_id NUMBER NOT NULL,
-	batch_id NUMBER NOT NULL CONSTRAINT sections_batch_id_fkey REFERENCES batches(batch_id),
-	section_name VARCHAR2(3) NOT NULL,
-	CONSTRAINT section_id_pkey PRIMARY KEY ( section_id )
+	section_id	NUMBER		NOT NULL,
+	batch_id	NUMBER		NOT NULL CONSTRAINT sections_batch_id_fkey REFERENCES batches(batch_id),
+	section_name	VARCHAR2(3)	NOT NULL,
+	CONSTRAINT	section_id_pkey	PRIMARY KEY ( section_id )
 );
 
 CREATE TABLE students (
-	student_id NUMBER NOT NULL,
-	section_id NUMBER NOT NULL CONSTRAINT students_section_id_fkey REFERENCES sections(section_id),
-	student_name VARCHAR2(50) NOT NULL,
-	student_email VARCHAR2(50),
-	student_phone VARCHAR2(20),
-	student_semester NUMBER NOT NULL,
+	student_id		NUMBER NOT NULL,
+	section_id		NUMBER NOT NULL CONSTRAINT students_section_id_fkey REFERENCES sections(section_id),
+	student_name		VARCHAR2(50) NOT NULL,
+	student_email		VARCHAR2(50),
+	student_phone		VARCHAR2(20),
+	student_semester	NUMBER NOT NULL,
 	CONSTRAINT student_id_pkey PRIMARY KEY ( student_id )
 );
 
@@ -329,8 +329,6 @@ CREATE OR REPLACE PROCEDURE add_attendance_record
 		VALUES ( student_id, schedule_id, attendance_record_value, attendance_record_date );
 	END;
 /
-<<<<<<< Updated upstream
-=======
 
 CREATE OR REPLACE PROCEDURE remove_teacher
 	(
@@ -507,4 +505,3 @@ CREATE OR REPLACE PROCEDURE edit_attendance_record
 		VALUES ( student_id, schedule_id, attendance_record_value, attendance_record_date );
 	END;
 /
->>>>>>> Stashed changes
