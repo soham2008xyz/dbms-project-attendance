@@ -448,18 +448,20 @@ CREATE OR REPLACE PROCEDURE edit_batch
 
 CREATE OR REPLACE PROCEDURE edit_section
 	(
-		
+		section_id		sections.section_id%type,
 		batch_id			sections.batch_id%type,
 		section_name	sections.section_name%type
 	)
 	IS
 	BEGIN
-		INSERT INTO sections ( batch_id, section_name )
-			VALUES ( batch_id, section_name );
+		UPDATE sections
+		SET batch_id = batch_year_passout,
+			batch_stream = batch_stream
+		WHERE batch_id = batch_id;
 	END;
 /
 
-CREATE OR REPLACE PROCEDURE add_student
+CREATE OR REPLACE PROCEDURE edit_student
 	(
 		section_id				students.section_id%type,
 		student_name			students.student_name%type,
