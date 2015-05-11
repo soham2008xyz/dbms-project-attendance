@@ -1,14 +1,16 @@
 -- Tables
 CREATE TABLE teachers (
 	teacher_id NUMBER NOT NULL,
+	teacher_code VARCHAR2(3) NOT NULL,
 	teacher_name VARCHAR2(50) NOT NULL,
-	teacher_email VARCHAR2(50), 
+	teacher_email VARCHAR2(50),
 	teacher_phone VARCHAR2(20),
 	CONSTRAINT teacher_id_pkey PRIMARY KEY ( teacher_id )
 );
 
 CREATE TABLE subjects (
 	subject_id NUMBER NOT NULL,
+	subject_code VARCHAR2(6) NOT NULL,
 	subject_name VARCHAR2(25) NOT NULL,
 	CONSTRAINT subject_id_pkey PRIMARY KEY ( subject_id )
 );
@@ -23,17 +25,17 @@ CREATE TABLE batches (
 CREATE TABLE sections (
 	section_id NUMBER NOT NULL,
 	batch_id NUMBER NOT NULL CONSTRAINT sections_batch_id_fkey REFERENCES batches(batch_id),
-	section_name VARCHAR(3) NOT NULL,
+	section_name VARCHAR2(3) NOT NULL,
 	CONSTRAINT section_id_pkey PRIMARY KEY ( section_id )
 );
 
 CREATE TABLE students (
 	student_id NUMBER NOT NULL,
 	section_id NUMBER NOT NULL CONSTRAINT students_section_id_fkey REFERENCES sections(section_id),
-	semester NUMBER NOT NULL,
 	student_name VARCHAR2(50) NOT NULL,
-	student_email VARCHAR2(50) , 
+	student_email VARCHAR2(50),
 	student_phone VARCHAR2(20),
+	student_semester NUMBER NOT NULL,
 	CONSTRAINT student_id_pkey PRIMARY KEY ( student_id )
 );
 
@@ -43,70 +45,70 @@ CREATE TABLE schedules (
 	teacher_id NUMBER NOT NULL CONSTRAINT schedules_teacher_id_fkey REFERENCES teachers(teacher_id),
 	section_id NUMBER NOT NULL CONSTRAINT schedules_section_id_fkey REFERENCES sections(section_id),
 	schedule_weekday VARCHAR2(25) NOT NULL,
-	schedule_period NUMBER NOT NULL, 
+	schedule_period NUMBER NOT NULL,
 	CONSTRAINT schedule_id_pkey PRIMARY KEY ( schedule_id )
 );
 
 CREATE TABLE attendance_records (
 	attendance_record_id NUMBER NOT NULL,
-	student_id NUMBER NOT NULL CONSTRAINT attendance_records_student_id_fkey REFERENCES students(student_id),
-	schedule_id NUMBER NOT NULL CONSTRAINT attendance_records_schedule_id_fkey REFERENCES schedules(schedule_id),
+	student_id NUMBER NOT NULL CONSTRAINT att_records_student_id_fkey REFERENCES students(student_id),
+	schedule_id NUMBER NOT NULL CONSTRAINT att_records_schedule_id_fkey REFERENCES schedules(schedule_id),
 	attendance_record_value NUMBER(1) DEFAULT 0,
 	attendance_record_date DATE NOT NULL,
-	CONSTRAINT attendance_id_pkey PRIMARY KEY ( attendance_id )
+	CONSTRAINT attendance_id_pkey PRIMARY KEY ( attendance_record_id )
 );
 
 -- Sequences
-CREATE SEQUENCE teachers_teacher_id_seq 
-	MINVALUE 1 
+CREATE SEQUENCE teachers_teacher_id_seq
+	MINVALUE 1
 	START WITH 1
 	INCREMENT BY 1
-	NOCACHE 
+	NOCACHE
 ;
 
-CREATE SEQUENCE subjects_subject_id_seq 
-	MINVALUE 10 
+CREATE SEQUENCE subjects_subject_id_seq
+	MINVALUE 10
 	START WITH 10
 	INCREMENT BY 10
-	NOCACHE 
+	NOCACHE
 ;
 
-CREATE SEQUENCE batches_batch_id_seq 
-	MINVALUE 1 
+CREATE SEQUENCE batches_batch_id_seq
+	MINVALUE 1
 	START WITH 1
 	INCREMENT BY 1
-	NOCACHE 
+	NOCACHE
 ;
 
-CREATE SEQUENCE sections_section_id_seq 
-	MINVALUE 1 
+CREATE SEQUENCE sections_section_id_seq
+	MINVALUE 1
 	START WITH 1
 	INCREMENT BY 1
-	NOCACHE 
+	NOCACHE
 ;
 
-CREATE SEQUENCE students_student_id_seq 
-	MINVALUE 1 
+CREATE SEQUENCE students_student_id_seq
+	MINVALUE 1
 	START WITH 1
 	INCREMENT BY 1
-	NOCACHE 
+	NOCACHE
 ;
 
-CREATE SEQUENCE schedules_schedule_id_seq 
-	MINVALUE 1 
+CREATE SEQUENCE schedules_schedule_id_seq
+	MINVALUE 1
 	START WITH 1
 	INCREMENT BY 1
-	NOCACHE 
+	NOCACHE
 ;
 
-CREATE SEQUENCE attendance_rec_id_seq 
-	MINVALUE 1 
+CREATE SEQUENCE attendance_records_id_seq
+	MINVALUE 1
 	START WITH 1
 	INCREMENT BY 1
-	NOCACHE 
+	NOCACHE
 ;
 
--- Triggers	
+-- Triggers
 CREATE OR REPLACE TRIGGER trig_teacher_autoincrement
 	BEFORE INSERT ON teachers
 	FOR EACH ROW
@@ -155,11 +157,11 @@ CREATE OR REPLACE TRIGGER trig_schedule_autoincrement
 	END;
 /
 
-CREATE OR REPLACE TRIGGER trig_a_record_autoincrement
+CREATE OR REPLACE TRIGGER trig_att_record_autoincrement
 	BEFORE INSERT ON attendance_records
 	FOR EACH ROW
 	BEGIN
-		:new.attendance_id := attendance_rec_id_seq.nextval;
+		:new.attendance_record_id := attendance_records_id_seq.nextval;
 	END;
 /
 
@@ -196,7 +198,7 @@ CREATE OR REPLACE VIEW all_teacher_routines AS
 		batches.batch_id,
 		batches.batch_stream
 	FROM
-		schedules,
+		schedules
 	INNER JOIN subjects
 		ON schedules.subject_id = subjects.subject_id
 	INNER JOIN sections
@@ -210,134 +212,120 @@ WITH READ ONLY;
 CREATE OR REPLACE VIEW attendance_list AS
 	SELECT
 		attendance_records.schedule_id,
-		schedules.section_id,
-		schedules.week_day,
-		schedules.period,
-		schedules.subject_id,
-		subjects.s_name,
-		students.s_name as student_name,
-		teachers.t_name,
 		attendance_records.student_id,
-		attendance_records.attended,
-		attendance_records.a_date
+		attendance_records.attendance_record_value,
+		attendance_records.attendance_record_date,
+		schedules.section_id,
+		schedules.schedule_weekday,
+		schedules.schedule_period,
+		schedules.subject_id,
+		subjects.subject_name,
+		students.student_name,
+		teachers.teacher_name
 	FROM
-	schedules,
-	sections,
-	subjects,
-	teachers,
-	attendance_records,
-	students
-	WHERE attendance_records.schedule_id = schedules.schedule_id
-	AND attendance_records.student_id = students.student_id
-	AND sections.section_id = schedules.section_id
-	AND subjects.subject_id = schedules.subject_id
-	AND teachers.teacher_id = schedules.teacher_id
+		schedules
+	INNER JOIN sections
+		ON schedules.section_id = sections.section_id
+	INNER JOIN subjects
+		ON schedules.subject_id = subjects.subject_id
+	INNER JOIN teachers
+		ON schedules.teacher_id = teachers.teacher_id
+	INNER JOIN attendance_records
+		ON schedules.schedule_id = attendance_records.schedule_id
+	INNER JOIN students
+		ON attendance_records.student_id = students.student_id
 WITH READ ONLY;
 
 -- Procedures
 CREATE OR REPLACE PROCEDURE add_teacher
-	( 
-		p_t_name   teachers.t_name%type,
-		p_email   teachers.email%type,
-		p_phone   teachers.phone%type
+	(
+		teacher_code	teachers.teacher_code%type,
+		teacher_name	teachers.teacher_name%type,
+		teacher_email	teachers.teacher_email%type,
+		teacher_phone	teachers.teacher_phone%type
 	)
 	IS
 	BEGIN
-		INSERT INTO teachers(t_name,email,phone)
-			VALUES(p_t_name,p_email,p_phone);
+		INSERT INTO teachers ( teacher_code, teacher_name, teacher_email, teacher_phone )
+			VALUES ( teacher_code, teacher_name, teacher_email, teacher_phone );
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE add_subject
-	( 
-		p_s_name   subjects.s_name%type
+	(
+		subject_name	subjects.subject_name%type
 	)
 	IS
 	BEGIN
-		INSERT INTO subjects(s_name)
-			VALUES(p_s_name);
+		INSERT INTO subjects ( subject_name )
+			VALUES ( subject_name );
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE add_batch
 	(
-		p_year_passout  batches.year_passout%type,
-		p_stream  batches.stream%type
+		batch_year_passout	batches.batch_year_passout%type,
+		batch_stream				batches.batch_stream%type
 	)
 	IS
 	BEGIN
-		INSERT INTO batches(year_passout,stream)
-			VALUES(p_year_passout,p_stream);
+		INSERT INTO batches ( batch_year_passout, batch_stream )
+			VALUES ( batch_year_passout, batch_stream );
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE add_section
 	(
-		p_batch_id  sections.batch_id%type,
-		p_s_letter  sections.s_letter%type,
-		p_s_year  sections.s_year%type
+		batch_id			sections.batch_id%type,
+		section_name	sections.section_name%type
 	)
 	IS
 	BEGIN
-		INSERT INTO sections(batch_id,s_letter,s_year)
-			VALUES(p_batch_id,p_s_letter,p_s_year);
+		INSERT INTO sections ( batch_id, section_name )
+			VALUES ( batch_id, section_name );
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE add_student
-	( 
-		p_section_id   students.section_id%type,
-		p_semester   students.semester%type,
-		p_s_name   students.s_name%type,
-		p_email   students.email%type,
-		p_phone   students.phone%type
+	(
+		section_id				students.section_id%type,
+		student_name			students.student_name%type,
+		student_email			students.student_email%type,
+		student_phone			students.student_phone%type,
+		student_semester	students.student_semester%type
 	)
 	IS
 	BEGIN
-		INSERT INTO students(section_id,semester,s_name,email,phone)
-			VALUES(p_section_id,p_semester,p_s_name,p_email,p_phone);
+		INSERT INTO students ( section_id, student_name, student_email, student_phone, student_semester )
+			VALUES ( section_id, student_name, student_email, student_phone, student_semester );
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE add_schedule
 	(
-		p_teacher_id   schedules.teacher_id%type,
-		p_section_id   schedules.section_id%type,
-		p_subject_id   schedules.subject_id%type,
-		p_week_day   schedules.week_day%type,
-		p_period   schedules.period%type
+		subject_id				schedules.subject_id%type,
+		teacher_id				schedules.teacher_id%type,
+		section_id				schedules.section_id%type,
+		schedule_weekday	schedules.schedule_weekday%type,
+		schedule_period		schedules.schedule_period%type
 	)
 	IS
 	BEGIN
-		INSERT INTO schedules(teacher_id,section_id,subject_id,week_day,period)
-			VALUES(p_teacher_id,p_section_id,p_subject_id,p_week_day,p_period);
+		INSERT INTO schedules ( subject_id, teacher_id, section_id, schedule_weekday, schedule_period )
+			VALUES ( subject_id, teacher_id, section_id,schedule_weekday, schedule_period );
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE add_attendance_record
-	( 
-		p_student_id   attendance_records.student_id%type,
-		p_schedule_id   attendance_records.schedule_id%type,
-		p_attended   attendance_records.attended%type,
-		p_a_date   attendance_records.a_date%type
+	(
+		student_id							attendance_records.student_id%type,
+		schedule_id							attendance_records.schedule_id%type,
+		attendance_record_value	attendance_records.attendance_record_value%type,
+		attendance_record_date	attendance_records.attendance_record_date%type
 	)
 	IS
 	BEGIN
-	  INSERT INTO attendance_records(student_id,schedule_id,attended,a_date)
-		VALUES(p_student_id,p_schedule_id,p_attended,p_a_date);
-	END;
-/
-
-CREATE OR REPLACE PROCEDURE view_class_routine
-	( 
-		p_s_letter   attendance_records.student_id%type,
-		p_schedule_id   attendance_records.schedule_id%type,
-		p_attended   attendance_records.attended%type,
-		p_a_date   attendance_records.a_date%type
-	)
-	IS
-	BEGIN
-	  INSERT INTO attendance_records(student_id,schedule_id,attended,a_date)
-		VALUES(p_student_id,p_schedule_id,p_attended,p_a_date);
+	  INSERT INTO attendance_records ( student_id, schedule_id, attendance_record_value, attendance_record_date )
+		VALUES ( student_id, schedule_id, attendance_record_value, attendance_record_date );
 	END;
 /
