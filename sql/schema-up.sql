@@ -341,3 +341,58 @@ CREATE OR REPLACE PROCEDURE remove_teacher
 		WHERE teacher_id = teacher_id;
 	END;
 /
+
+CREATE OR REPLACE PROCEDURE remove_subject
+	(
+		subject_id	subjects.subject_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM subjects
+		WHERE subject_id = subject_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_batch
+	(
+		batch_id	batches.batch_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM batches
+		WHERE batch_id = batch_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_section
+	(
+		section_id	sections.section_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM sections
+		WHERE section_id = section_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_schedule
+	(
+		schedule_id	schedules.schedule_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM schedules
+		WHERE schedule_id = schedule_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_attendance_record
+	(
+		attendance_record_id	attendance_records.attendance_record_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM attendance_records
+		WHERE attendance_record_id = attendance_record_id;
+	END;
+/
