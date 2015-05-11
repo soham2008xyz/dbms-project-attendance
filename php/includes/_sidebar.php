@@ -46,9 +46,8 @@
                 <i class="fa fa-mortar-board fa-fw"></i> <span>Student</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="student-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
-                <li><a href="student-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
-                <li><a href="student-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
+                <li><a href="student-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Students</a></li>
+                <li><a href="student-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Student</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -58,9 +57,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="schedule-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
-                <li><a href="schedule-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
-                <li><a href="schedule-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
+                <li><a href="schedule-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Schedules</a></li>
+                <li><a href="schedule-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Schedule</a></li>
               </ul>
             </li>
             <li class="treeview">
