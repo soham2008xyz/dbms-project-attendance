@@ -221,7 +221,9 @@ CREATE OR REPLACE VIEW attendance_list AS
 		schedules.subject_id,
 		subjects.subject_name,
 		students.student_name,
-		teachers.teacher_name
+		teachers.teacher_name,
+		teachers.teacher_code,
+		sections.section_name
 	FROM
 		schedules
 	INNER JOIN sections
@@ -372,6 +374,17 @@ CREATE OR REPLACE PROCEDURE remove_section
 	BEGIN
 		DELETE FROM sections
 		WHERE section_id = s_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_student
+	(
+		s_id	students.student_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM students
+		WHERE student_id = s_id;
 	END;
 /
 
