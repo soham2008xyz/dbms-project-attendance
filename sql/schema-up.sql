@@ -333,67 +333,67 @@ CREATE OR REPLACE PROCEDURE add_attendance_record
 
 CREATE OR REPLACE PROCEDURE remove_teacher
 	(
-		teacher_id	teachers.teacher_id%type
+		t_id	teachers.teacher_id%type
 	)
 	IS
 	BEGIN
 		DELETE FROM teachers
-		WHERE teacher_id = teacher_id;
+		WHERE teacher_id = t_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE remove_subject
 	(
-		subject_id	subjects.subject_id%type
+		s_id	subjects.subject_id%type
 	)
 	IS
 	BEGIN
 		DELETE FROM subjects
-		WHERE subject_id = subject_id;
+		WHERE subject_id = s_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE remove_batch
 	(
-		batch_id	batches.batch_id%type
+		b_id	batches.batch_id%type
 	)
 	IS
 	BEGIN
 		DELETE FROM batches
-		WHERE batch_id = batch_id;
+		WHERE batch_id = b_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE remove_section
 	(
-		section_id	sections.section_id%type
+		s_id	sections.section_id%type
 	)
 	IS
 	BEGIN
 		DELETE FROM sections
-		WHERE section_id = section_id;
+		WHERE section_id = s_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE remove_schedule
 	(
-		schedule_id	schedules.schedule_id%type
+		s_id	schedules.schedule_id%type
 	)
 	IS
 	BEGIN
 		DELETE FROM schedules
-		WHERE schedule_id = schedule_id;
+		WHERE schedule_id = s_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE remove_attendance_record
 	(
-		attendance_record_id	attendance_records.attendance_record_id%type
+		a_id	attendance_records.attendance_record_id%type
 	)
 	IS
 	BEGIN
 		DELETE FROM attendance_records
-		WHERE attendance_record_id = attendance_record_id;
+		WHERE attendance_record_id = a_id;
 	END;
 /
 
@@ -419,89 +419,106 @@ CREATE OR REPLACE PROCEDURE edit_teacher
 
 CREATE OR REPLACE PROCEDURE edit_subject
 	(
-		subject_id	subjects.subject_id%type,
-		subject_code	subjects.subject_code%type,
-		subject_name	subjects.subject_name%type
+		s_id	subjects.subject_id%type,
+		s_code	subjects.subject_code%type,
+		s_name	subjects.subject_name%type
 	)
 	IS
 	BEGIN
 		UPDATE subjects
-		SET subject_code = subject_code,
-			subject_name = subject_name
-		WHERE subject_id = subject_id;
+		SET subject_code = s_code,
+			subject_name = s_name
+		WHERE subject_id = s_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE edit_batch
 	(
-		batch_id	batches.batch_id%type,
-		batch_year_passout	batches.batch_year_passout%type,
-		batch_stream				batches.batch_stream%type
+		b_id	batches.batch_id%type,
+		b_year_passout	batches.batch_year_passout%type,
+		b_stream				batches.batch_stream%type
 	)
 	IS
 	BEGIN
 		UPDATE batches
-		SET batch_year_passout = batch_year_passout,
-			batch_stream = batch_stream
-		WHERE batch_id = batch_id;
+		SET batch_year_passout = b_year_passout,
+			batch_stream = b_stream
+		WHERE batch_id = b_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE edit_section
 	(
-		section_id		sections.section_id%type,
-		batch_id			sections.batch_id%type,
-		section_name	sections.section_name%type
+		s_id		sections.section_id%type,
+		b_id			sections.batch_id%type,
+		s_name	sections.section_name%type
 	)
 	IS
 	BEGIN
 		UPDATE sections
-		SET batch_id = batch_year_passout,
-			batch_stream = batch_stream
-		WHERE batch_id = batch_id;
+		SET batch_id = b_id,
+			section_name = s_name
+		WHERE section_id = s_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE edit_student
 	(
-		section_id				students.section_id%type,
-		student_name			students.student_name%type,
-		student_email			students.student_email%type,
-		student_phone			students.student_phone%type,
-		student_semester	students.student_semester%type
+		st_id		students.student_id%type,
+		s_id		students.section_id%type,
+		s_name			students.student_name%type,
+		s_email			students.student_email%type,
+		s_phone			students.student_phone%type,
+		s_semester	students.student_semester%type
 	)
 	IS
 	BEGIN
-		INSERT INTO students ( section_id, student_name, student_email, student_phone, student_semester )
-			VALUES ( section_id, student_name, student_email, student_phone, student_semester );
+		UPDATE students
+		SET section_id = s_id, 
+			student_name = s_name,
+			student_email = s_email,
+			student_phone = s_phone,
+			student_semester = s_semester
+		WHERE student_id = st_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE edit_schedule
 	(
-		subject_id				schedules.subject_id%type,
-		teacher_id				schedules.teacher_id%type,
-		section_id				schedules.section_id%type,
-		schedule_weekday	schedules.schedule_weekday%type,
-		schedule_period		schedules.schedule_period%type
+		sch_id		schedules.schedule_id%type,
+		s_id				schedules.subject_id%type,
+		t_id				schedules.teacher_id%type,
+		sec_id				schedules.section_id%type,
+		s_weekday	schedules.schedule_weekday%type,
+		s_period		schedules.schedule_period%type
 	)
 	IS
 	BEGIN
-		INSERT INTO schedules ( subject_id, teacher_id, section_id, schedule_weekday, schedule_period )
-			VALUES ( subject_id, teacher_id, section_id,schedule_weekday, schedule_period );
+		UPDATE schedules
+		SET subject_id = s_id, 
+			teacher_id = t_id,
+			section_id = sec_id,
+			schedule_weekday = s_weekday,
+			schedule_period = s_period
+		WHERE schedule_id = sch_id;
 	END;
 /
 
 CREATE OR REPLACE PROCEDURE edit_attendance_record
 	(
-		student_id							attendance_records.student_id%type,
-		schedule_id							attendance_records.schedule_id%type,
-		attendance_record_value	attendance_records.attendance_record_value%type,
-		attendance_record_date	attendance_records.attendance_record_date%type
+		a_id 	attendance_records.attendance_record_id%type,
+		st_id			attendance_records.student_id%type,
+		sch_id			attendance_records.schedule_id%type,
+		a_value	attendance_records.attendance_record_value%type,
+		a_date	attendance_records.attendance_record_date%type
 	)
 	IS
 	BEGIN
-	  INSERT INTO attendance_records ( student_id, schedule_id, attendance_record_value, attendance_record_date )
-		VALUES ( student_id, schedule_id, attendance_record_value, attendance_record_date );
+		UPDATE attendance_records
+		SET student_id = st_id, 
+			schedule_id = sch_id,
+			attendance_record_value = a_value,
+			attendance_record_date = a_date
+		WHERE attendance_record_id = a_id;
 	END;
 /
