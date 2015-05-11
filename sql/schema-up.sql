@@ -11,7 +11,7 @@ CREATE TABLE teachers (
 CREATE TABLE subjects (
 	subject_id NUMBER NOT NULL,
 	subject_code VARCHAR2(6) NOT NULL,
-	subject_name VARCHAR2(25) NOT NULL,
+	subject_name VARCHAR2(50) NOT NULL,
 	CONSTRAINT subject_id_pkey PRIMARY KEY ( subject_id )
 );
 
@@ -253,12 +253,13 @@ CREATE OR REPLACE PROCEDURE add_teacher
 
 CREATE OR REPLACE PROCEDURE add_subject
 	(
+		subject_code	subjects.subject_code%type,
 		subject_name	subjects.subject_name%type
 	)
 	IS
 	BEGIN
-		INSERT INTO subjects ( subject_name )
-			VALUES ( subject_name );
+		INSERT INTO subjects ( subject_code, subject_name )
+			VALUES ( subject_code, subject_name );
 	END;
 /
 
