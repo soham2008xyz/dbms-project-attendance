@@ -1,7 +1,7 @@
 <?php
 global $conn;
 
-$db = 'oci:dbname=localhost/orcl;charset=CL8MSWIN1251';
+$db = 'oci:dbname=localhost/orcl';
 $user = 'attendance';
 $pass = 'attendance';
 try {

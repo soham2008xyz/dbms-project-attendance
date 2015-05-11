@@ -10,7 +10,7 @@
 	<!-- Ionicons -->
 	<link href="<?= $SITE_ROOT ?>../bower_components/ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css">
 	<!-- Theme style -->
-	<link href="<?= $SITE_ROOT ?>../bower_components/font-source-sans-pro/source-sans-pro.css" rel="stylesheet" type="text/css">
+	<!--<link href="<?= $SITE_ROOT ?>../bower_components/font-source-sans-pro/source-sans-pro.css" rel="stylesheet" type="text/css">-->
 	<link href="<?= $SITE_ROOT ?>../bower_components/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css">
 	<link href="<?= $SITE_ROOT ?>../bower_components/AdminLTE/dist/css/skins/skin-black.min.css" rel="stylesheet" type="text/css">
 
