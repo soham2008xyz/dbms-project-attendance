@@ -3,10 +3,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Add a New Batch
+      Add New Batch
+      <small>Please fill in the details</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+      <li><a href="<?= $SITE_ROOT ?>"><i class="fa fa-home"></i> Home</a></li>
       <li><a href="#">Batches</a></li>
       <li class="active">Add Batch</li>
     </ol>

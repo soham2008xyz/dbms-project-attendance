@@ -1,15 +1,15 @@
-<?php global $updated, $error; ?>
+<?php global $conn, $updated, $error; ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Add New Subject
+      Add New Section
       <small>Please fill in the details</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?= $SITE_ROOT ?>"><i class="fa fa-home"></i> Home</a></li>
-      <li><a href="#">Subjects</a></li>
-      <li class="active">Add Subject</li>
+      <li><a href="#">Sections</a></li>
+      <li class="active">Add Section</li>
     </ol>
   </section>
 
@@ -33,19 +33,27 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header">
-            <h3 class="box-title">Subject Details</h3>
+            <h3 class="box-title">Section Details</h3>
           </div><!-- /.box-header -->
           <!-- form start -->
           <form role="form" method="post" action="<?= $_SERVER["PHP_SELF"] ?>">
             <div class="box-body">
               <div class="form-group">
-                <label for="subject-name">Subject name</label>
-                <input type="text" maxlength="50" class="form-control" id="subject-name" name="subject-name" required placeholder="Enter subject name">
+                <label for="section-name">Section Name</label>
+                <input type="text" maxlength="3" class="form-control" id="section-name" name="section-name" required placeholder="Enter Section Name">
               </div>
               <div class="form-group">
-                <label for="subject-code">Subject code</label>
-                <input type="text" maxlength="6" class="form-control" id="subject-code" name="subject-code" required placeholder="Enter subject code">
+                <label for="batch-id">Batch</label>
+                <select class="form-control" id="batch-id" name="batch-id">
+                  <?php $batches = $conn->query("SELECT * FROM BATCHES"); ?>
+                  <?php foreach ( $batches as $batch ) { ?>
+                  <option value="<?= $batch["BATCH_ID"] ?>">
+                          Batch of <?= $batch["BATCH_YEAR_PASSOUT"] ?>, <?= $batch["BATCH_STREAM"] ?>
+                  </option>
+                  <?php } ?>
+                </select>
               </div>
+
             </div><!-- /.box-body -->
 
             <div class="box-footer">

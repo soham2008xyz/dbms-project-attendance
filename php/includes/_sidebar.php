@@ -7,50 +7,43 @@
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-paperclip"></i> <span>Subjects</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-paperclip fa-fw"></i> <span>Subjects</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="subject-list.php"><i class="fa fa-circle-o"></i> View All Subjects</a></li>
-                <li><a href="subject-add.php"><i class="fa fa-circle-o"></i> Add Subject</a></li>
+                <li><a href="subject-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Subjects</a></li>
+                <li><a href="subject-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Subject</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-group"></i><span>Batch</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-group fa-fw"></i> <span>Batches</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="batch-list.php"><i class="fa fa-circle-o"></i> View All Batches</a></li>
-                <li><a href="batch-add.php"><i class="fa fa-circle-o"></i> Add Batch</a></li>
+                <li><a href="batch-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Batches</a></li>
+                <li><a href="batch-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Batch</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-group"></i>
-                <span>Section</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-group fa-fw"></i> <span>Sections</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <<li><a href="section-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
-                <li><a href="section-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
-                <li><a href="section-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
+                <li><a href="section-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Sections</a></li>
+                <li><a href="section-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Section</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-user"></i>
-                <span>Teachers</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-user fa-fw"></i> <span>Teachers</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="teacher-list.php"><i class="fa fa-circle-o"></i> View All Teachers</a></li>
-                <li><a href="teacher-add.php"><i class="fa fa-circle-o"></i> Add Teacher</a></li>
+                <li><a href="teacher-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Teachers</a></li>
+                <li><a href="teacher-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Teacher</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-mortar-board"></i>
-                <span>Student</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-mortar-board fa-fw"></i> <span>Student</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="student-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
