@@ -408,7 +408,8 @@ CREATE OR REPLACE PROCEDURE edit_teacher
 	IS
 	BEGIN
 		UPDATE teachers
-		SET teacher_code = teacher_code,
+		SET
+			teacher_code = teacher_code,
 			teacher_name = teacher_name,
 			teacher_email = teacher_email,
 			teacher_phone = teacher_phone

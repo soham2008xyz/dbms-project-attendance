@@ -1,4 +1,4 @@
-<?php global $SITE_ROOT, $teachers, $error; ?>
+<?php global $SITE_ROOT, $teachers, $error, $deleted; ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -24,6 +24,12 @@
           <strong>Error!</strong> Please try again.
         </div>
         <?php } else { ?>
+        <?php if( $deleted ) { ?>
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Done!</strong> Record deleted.
+        </div>
+        <?php } ?>
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Teachers List</h3>
@@ -32,7 +38,7 @@
             <table id="teachers-table" class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
-                  <th>Teacher ID</th>
+                  <th>Actions</th>
                   <th>Teacher Code</th>
                   <th>Teacher Name</th>
                   <th>Teacher Email</th>
@@ -42,7 +48,14 @@
               <tbody>
                 <?php foreach( $teachers as $teacher ) { ?>
                 <tr>
-                  <td><?= $teacher["TEACHER_ID"] ?></td>
+                  <td class="text-center">
+                    <a class="btn btn-primary btn-flat" href="teacher-edit.php?id=<?= $teacher["TEACHER_ID"] ?>" data-title="Edit">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a class="btn btn-danger btn-flat" href="teacher-list.php?delete=<?= $teacher["TEACHER_ID"] ?>" data-title="Delete">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </td>
                   <td><?= $teacher["TEACHER_CODE"] ?></td>
                   <td><?= $teacher["TEACHER_NAME"] ?></td>
                   <td><?= $teacher["TEACHER_EMAIL"] ?></td>
@@ -52,7 +65,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th>Teacher ID</th>
+                  <th>Actions</th>
                   <th>Teacher Code</th>
                   <th>Teacher Name</th>
                   <th>Teacher Email</th>
