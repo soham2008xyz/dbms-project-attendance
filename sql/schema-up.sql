@@ -399,21 +399,22 @@ CREATE OR REPLACE PROCEDURE remove_attendance_record
 
 CREATE OR REPLACE PROCEDURE edit_teacher
 	(
-		teacher_id		teachers.teacher_id%type,
-		teacher_code	teachers.teacher_code%type,
-		teacher_name	teachers.teacher_name%type,
-		teacher_email	teachers.teacher_email%type,
-		teacher_phone	teachers.teacher_phone%type
+		t_id		teachers.teacher_id%type,
+		t_code	teachers.teacher_code%type,
+		t_name	teachers.teacher_name%type,
+		t_email	teachers.teacher_email%type,
+		t_phone	teachers.teacher_phone%type
 	)
 	IS
 	BEGIN
 		UPDATE teachers
-		SET
-			teacher_code = teacher_code,
-			teacher_name = teacher_name,
-			teacher_email = teacher_email,
-			teacher_phone = teacher_phone
-		WHERE teacher_id = teacher_id;
+			SET
+			teacher_code = t_code,
+			teacher_name = t_name,
+			teacher_email = t_email,
+			teacher_phone = t_phone
+		WHERE teacher_id = t_id;
+		COMMIT;
 	END;
 /
 
