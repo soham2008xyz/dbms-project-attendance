@@ -7,12 +7,11 @@
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-paperclip"></i> <span>Subject</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-paperclip"></i> <span>Subjects</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="subject-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
-                <li><a href="subject-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
-                <li><a href="subject-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
+                <li><a href="subject-list.php"><i class="fa fa-circle-o"></i> View All Subjects</a></li>
+                <li><a href="subject-add.php"><i class="fa fa-circle-o"></i> Add Subject</a></li>
               </ul>
             </li>
             <li class="treeview">
