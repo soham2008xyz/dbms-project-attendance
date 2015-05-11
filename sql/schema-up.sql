@@ -341,3 +341,164 @@ CREATE OR REPLACE PROCEDURE remove_teacher
 		WHERE teacher_id = teacher_id;
 	END;
 /
+
+CREATE OR REPLACE PROCEDURE remove_subject
+	(
+		subject_id	subjects.subject_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM subjects
+		WHERE subject_id = subject_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_batch
+	(
+		batch_id	batches.batch_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM batches
+		WHERE batch_id = batch_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_section
+	(
+		section_id	sections.section_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM sections
+		WHERE section_id = section_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_schedule
+	(
+		schedule_id	schedules.schedule_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM schedules
+		WHERE schedule_id = schedule_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE remove_attendance_record
+	(
+		attendance_record_id	attendance_records.attendance_record_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM attendance_records
+		WHERE attendance_record_id = attendance_record_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE edit_teacher
+	(
+		teacher_id		teachers.teacher_id%type,
+		teacher_code	teachers.teacher_code%type,
+		teacher_name	teachers.teacher_name%type,
+		teacher_email	teachers.teacher_email%type,
+		teacher_phone	teachers.teacher_phone%type
+	)
+	IS
+	BEGIN
+		UPDATE teachers
+		SET teacher_code = teacher_code,
+			teacher_name = teacher_name,
+			teacher_email = teacher_email,
+			teacher_phone = teacher_phone
+		WHERE teacher_id = teacher_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE edit_subject
+	(
+		subject_id	subjects.subject_id%type,
+		subject_code	subjects.subject_code%type,
+		subject_name	subjects.subject_name%type
+	)
+	IS
+	BEGIN
+		UPDATE subjects
+		SET subject_code = subject_code,
+			subject_name = subject_name
+		WHERE subject_id = subject_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE edit_batch
+	(
+		batch_id	batches.batch_id%type,
+		batch_year_passout	batches.batch_year_passout%type,
+		batch_stream				batches.batch_stream%type
+	)
+	IS
+	BEGIN
+		UPDATE batches
+		SET batch_year_passout = batch_year_passout,
+			batch_stream = batch_stream
+		WHERE batch_id = batch_id;
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE edit_section
+	(
+		
+		batch_id			sections.batch_id%type,
+		section_name	sections.section_name%type
+	)
+	IS
+	BEGIN
+		INSERT INTO sections ( batch_id, section_name )
+			VALUES ( batch_id, section_name );
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE add_student
+	(
+		section_id				students.section_id%type,
+		student_name			students.student_name%type,
+		student_email			students.student_email%type,
+		student_phone			students.student_phone%type,
+		student_semester	students.student_semester%type
+	)
+	IS
+	BEGIN
+		INSERT INTO students ( section_id, student_name, student_email, student_phone, student_semester )
+			VALUES ( section_id, student_name, student_email, student_phone, student_semester );
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE edit_schedule
+	(
+		subject_id				schedules.subject_id%type,
+		teacher_id				schedules.teacher_id%type,
+		section_id				schedules.section_id%type,
+		schedule_weekday	schedules.schedule_weekday%type,
+		schedule_period		schedules.schedule_period%type
+	)
+	IS
+	BEGIN
+		INSERT INTO schedules ( subject_id, teacher_id, section_id, schedule_weekday, schedule_period )
+			VALUES ( subject_id, teacher_id, section_id,schedule_weekday, schedule_period );
+	END;
+/
+
+CREATE OR REPLACE PROCEDURE edit_attendance_record
+	(
+		student_id							attendance_records.student_id%type,
+		schedule_id							attendance_records.schedule_id%type,
+		attendance_record_value	attendance_records.attendance_record_value%type,
+		attendance_record_date	attendance_records.attendance_record_date%type
+	)
+	IS
+	BEGIN
+	  INSERT INTO attendance_records ( student_id, schedule_id, attendance_record_value, attendance_record_date )
+		VALUES ( student_id, schedule_id, attendance_record_value, attendance_record_date );
+	END;
+/
