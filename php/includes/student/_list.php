@@ -1,4 +1,4 @@
-<?php global $SITE_ROOT, $sections, $error, $deleted; ?>
+<?php global $SITE_ROOT, $students, $error, $deleted; ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">

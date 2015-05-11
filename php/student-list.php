@@ -38,7 +38,7 @@
         <script src="<?= $SITE_ROOT ?>../bower_components/AdminLTE/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="<?= $SITE_ROOT ?>../bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
         <script type="text/javascript">
-          $("#sections-table").dataTable();
+          $("#student-table").dataTable();
           $('[data-title]').tooltip();
         </script>
     </body>
