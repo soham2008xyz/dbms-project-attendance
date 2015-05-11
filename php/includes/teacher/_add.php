@@ -1,4 +1,4 @@
-<?php global $updated, $error; ?>
+<?php global $SITE_ROOT, $updated, $error; ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -7,7 +7,7 @@
       <small>Please fill in the details</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+      <li><a href="<?= $SITE_ROOT ?>"><i class="fa fa-home"></i> Home</a></li>
       <li><a href="#">Teachers</a></li>
       <li class="active">Add Teacher</li>
     </ol>
