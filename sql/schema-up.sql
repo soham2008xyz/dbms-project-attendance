@@ -408,7 +408,8 @@ CREATE OR REPLACE PROCEDURE edit_teacher
 	IS
 	BEGIN
 		UPDATE teachers
-		SET teacher_code = teacher_code,
+		SET
+			teacher_code = teacher_code,
 			teacher_name = teacher_name,
 			teacher_email = teacher_email,
 			teacher_phone = teacher_phone
@@ -448,7 +449,7 @@ CREATE OR REPLACE PROCEDURE edit_batch
 
 CREATE OR REPLACE PROCEDURE edit_section
 	(
-		
+
 		batch_id			sections.batch_id%type,
 		section_name	sections.section_name%type
 	)

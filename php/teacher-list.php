@@ -3,6 +3,14 @@
 <?php global $TITLE, $SITE_ROOT, $conn; ?>
 <?php $TITLE = "View All Teachers"; ?>
 <?php
+  $deleted = false;
+  if( isset($_GET["delete"]) ) {
+    $sql = "CALL remove_teacher( :id )";
+    $stmt = $conn->prepare( $sql );
+    $stmt->bindParam(':id', $_GET["delete"], PDO::PARAM_INT );
+    if( $stmt->execute() )
+      $deleted = true;
+  }
   $teachers = $conn->query("SELECT * FROM TEACHERS");
   if( $teachers ) {
     $error = false;
@@ -27,6 +35,7 @@
         <script src="<?= $SITE_ROOT ?>../bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
         <script type="text/javascript">
           $("#teachers-table").dataTable();
+          $('[data-title]').tooltip();
         </script>
     </body>
 </html>

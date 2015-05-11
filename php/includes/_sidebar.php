@@ -48,7 +48,6 @@
               <ul class="treeview-menu">
                 <li><a href="teacher-list.php"><i class="fa fa-circle-o"></i> View All Teachers</a></li>
                 <li><a href="teacher-add.php"><i class="fa fa-circle-o"></i> Add Teacher</a></li>
-                <li><a href="teacher-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
               </ul>
             </li>
             <li class="treeview">
