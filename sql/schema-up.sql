@@ -10,6 +10,7 @@ CREATE TABLE teachers (
 
 CREATE TABLE subjects (
 	subject_id NUMBER NOT NULL,
+	subject_code VARCHAR2(6) NOT NULL,
 	subject_name VARCHAR2(25) NOT NULL,
 	CONSTRAINT subject_id_pkey PRIMARY KEY ( subject_id )
 );
