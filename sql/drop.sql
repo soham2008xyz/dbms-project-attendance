@@ -1,0 +1,14 @@
+drop table attendance_records;
+drop table schedules;
+drop table students;
+drop table sections;
+drop table batches;
+drop table subjects;
+drop table teachers;
+drop SEQUENCE teachers_teacher_id_seq;
+drop SEQUENCE subjects_subject_id_seq;
+drop SEQUENCE batches_batch_id_seq;
+drop SEQUENCE sections_section_id_seq;
+drop SEQUENCE students_student_id_seq;
+drop SEQUENCE schedules_schedule_id_seq;
+drop SEQUENCE attendance_rec_id_seq;
