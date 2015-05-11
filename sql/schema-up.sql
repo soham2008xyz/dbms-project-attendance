@@ -330,3 +330,14 @@ CREATE OR REPLACE PROCEDURE add_attendance_record
 		VALUES ( student_id, schedule_id, attendance_record_value, attendance_record_date );
 	END;
 /
+
+CREATE OR REPLACE PROCEDURE remove_teacher
+	(
+		teacher_id	teachers.teacher_id%type
+	)
+	IS
+	BEGIN
+		DELETE FROM teachers
+		WHERE teacher_id = teacher_id;
+	END;
+/
