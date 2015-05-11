@@ -16,14 +16,11 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-group"></i>
-                <span>Batch</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-group"></i><span>Batch</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="batch-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
-                <li><a href="batch-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
-                <li><a href="batch-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
+                <li><a href="batch-list.php"><i class="fa fa-circle-o"></i> View All Batches</a></li>
+                <li><a href="batch-add.php"><i class="fa fa-circle-o"></i> Add Batch</a></li>
               </ul>
             </li>
             <li class="treeview">

@@ -5,7 +5,7 @@
 <?php
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("CALL add_batch ( :year, :stream )");
-    $stmt->bindParam(':year', $_POST['year-passout'], PDO::PARAM_STR );
+    $stmt->bindParam(':year', $_POST['batch-year-passout'], PDO::PARAM_STR );
     $stmt->bindParam(':stream', $_POST['batch-stream'], PDO::PARAM_STR );
     if( $stmt->execute() ) {
       $updated = true;
