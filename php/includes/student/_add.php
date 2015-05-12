@@ -67,7 +67,7 @@
                   <?php $sections = $conn->query("SELECT * FROM SECTIONS INNER JOIN BATCHES ON BATCHES.batch_id = SECTIONS.batch_id "); ?>
                   <?php foreach ( $sections as $section ) { ?>
                   <option value="<?= $section["SECTION_ID"] ?>">
-                          Section <?= $section["SECTION_NAME"] ?> of Batch <?= $section["BATCH_YEAR_PASSOUT"] ?>, <?= $section["BATCH_STREAM"] ?>
+                          Section <?= $section["SECTION_NAME"] ?> - Batch of <?= $section["BATCH_YEAR_PASSOUT"] ?>, <?= $section["BATCH_STREAM"] ?>
                   </option>
                   <?php } ?>
                 </select>
