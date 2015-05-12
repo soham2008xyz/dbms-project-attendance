@@ -51,7 +51,7 @@
                   </td>
                   <td><?= $record["ATTENDANCE_RECORD_DATE"] ?></td>
                   <td>Batch of <?= $record["BATCH_YEAR_PASSOUT"] ?>, <?= $record["BATCH_STREAM"] ?></td>
-                  <td>Section <?= $record["SECTION_NAME"] ?></td>
+                  <td><?= $record["SECTION_NAME"] ?></td>
                   <td><?= $record["TEACHER_NAME"] ?> <small>(<?= $record["TEACHER_CODE"] ?>)</small></td>
                   <td><?= $record["SUBJECT_NAME"] ?> <small>(<?= $record["SUBJECT_CODE"] ?>)</small></td>
                   <td><?= $record["NUM_STUDENTS"] ?></td>
