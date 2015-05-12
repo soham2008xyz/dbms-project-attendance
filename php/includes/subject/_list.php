@@ -30,7 +30,7 @@
           <strong>Done!</strong> Record deleted.
         </div>
         <?php } ?>
-        <div class="box">
+        <div class="box box-primary">
           <div class="box-header">
             <h3 class="box-title">Subjects List</h3>
           </div><!-- /.box-header -->

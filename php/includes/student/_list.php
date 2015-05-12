@@ -30,7 +30,7 @@
           <strong>Done!</strong> Record deleted.
         </div>
         <?php } ?>
-        <div class="box">
+        <div class="box box-primary">
           <div class="box-header">
             <h3 class="box-title">Students List</h3>
           </div><!-- /.box-header -->
@@ -42,8 +42,9 @@
                   <th>Student Name</th>
                   <th>Student Email</th>
                   <th>Student Phone</th>
-                  <th>Section Name</th>
+                  <th>Semester</th>
                   <th>Batch</th>
+                  <th>Section</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,8 +61,9 @@
                   <td><?= $student["STUDENT_NAME"] ?></td>
                   <td><?= $student["STUDENT_EMAIL"] ?></td>
                   <td><?= $student["STUDENT_PHONE"] ?></td>
-                  <td><?= $student["SECTION_NAME"] ?></td>
+                  <td><?= $student["STUDENT_SEMESTER"] ?></td>
                   <td>Batch of <?= $student["BATCH_YEAR_PASSOUT"] ?>, <?= $student["BATCH_STREAM"] ?></td>
+                  <td>Section <?= $student["SECTION_NAME"] ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
@@ -71,13 +73,14 @@
                   <th>Student Name</th>
                   <th>Student Email</th>
                   <th>Student Phone</th>
-                  <th>Section Name</th>
+                  <th>Semester</th>
                   <th>Batch</th>
+                  <th>Section</th>
                 </tr>
               </tfoot>
             </table>
           </div>
-        </div>
+        </div><!-- /.box -->
         <?php } ?>
       </div>
     </div>

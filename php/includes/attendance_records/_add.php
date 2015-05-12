@@ -3,13 +3,13 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Add New Schedule
+      Take Attendance
       <small>Please fill in the details</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?= $SITE_ROOT ?>"><i class="fa fa-home"></i> Home</a></li>
-      <li><a href="#">Schedules</a></li>
-      <li class="active">Add Schedule</li>
+      <li><a href="#">Attendance Records</a></li>
+      <li class="active">Take Attendance</li>
     </ol>
   </section>
 
@@ -39,45 +39,31 @@
           <form role="form" method="post" action="<?= $_SERVER["PHP_SELF"] ?>">
             <div class="box-body">
               <div class="form-group">
-                <label for="record-date">Date</label>
-                <input class="datepicker form-control" id="record-date" name="record-date" data-date-format="mm/dd/yyyy">
-              </div>
-              
-              <div class="form-group">
-                <label for="schedule-id">Schedule</label>
-                <select class="form-control" id="schedule-id" name="schedule-id">
-                  <?php $schedules = $conn->query("SELECT * FROM ATTENDANCE_LIST"); ?>
-                  <?php foreach ( $schedules as $schedule ) { ?>
-                  <option value="<?= $schedule["SCHEDULE_ID"] ?>">
-                    <?= $schedule["SCHEDULE_WEEKDAY"] ?> <?= $schedule["SCHEDULE_PERIOD"] ?> : Subject <?= $section["SUBJECT_NAME"] ?> - Section <?= $schedule["SECTION_NAME"] ?>, <?= $section["BATCH_STREAM"] ?> <?= $section["BATCH_YEAR_PASSOUT"] ?>
-                  </option>
-                  <?php } ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="student-id">Student</label>
-                <select class="form-control" id="student-id" name="student-id">
-                  <?php $students = $conn->query("SELECT * FROM SUBJECTS"); ?>
-                  <?php foreach ( $subjects as $subject ) { ?>
-                  <option value="<?= $subject["SUBJECT_ID"] ?>">
-                    <?= $subject["SUBJECT_CODE"] ?> - <?= $subject["SUBJECT_NAME"] ?>
-                  </option>
-                  <?php } ?>
-                </select>
-              </div>
-              <div class="form-group">
                 <label for="teacher-id">Teacher</label>
                 <select class="form-control" id="teacher-id" name="teacher-id">
-                  <?php $teachers = $conn->query("SELECT * FROM TEACHERS "); ?>
+                  <?php $teachers = $conn->query("SELECT DISTINCT SCHEDULES.TEACHER_ID, TEACHERS.TEACHER_CODE, TEACHERS.TEACHER_NAME
+                  FROM SCHEDULES
+                  INNER JOIN TEACHERS
+                  ON TEACHERS.TEACHER_ID = SCHEDULES.TEACHER_ID"); ?>
                   <?php foreach ( $teachers as $teacher ) { ?>
                   <option value="<?= $teacher["TEACHER_ID"] ?>">
-                    <?= $teacher["TEACHER_NAME"] ?> (<?= $teacher["TEACHER_CODE"] ?>)
+                    <?= $teacher["TEACHER_NAME"] ?> <small>(<?= $teacher["TEACHER_CODE"] ?>)</small>
+                  </option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="subject-id">Subject</label>
+                <select class="form-control" id="subject-id" name="subject-id">
+                  <?php $subjects = $conn->query("SELECT "); ?>
+                  <?php foreach ( $subjects as $subject ) { ?>
+                  <option value="<?= $subject["SUBJECT_ID"] ?>">
+                    <?= $subject["SUBJECT_NAME"] ?> <small>(<?= $subject["SUBJECT_CODE"] ?>)</small>
                   </option>
                   <?php } ?>
                 </select>
               </div>
             </div><!-- /.box-body -->
-
             <div class="box-footer">
               <button type="submit" class="btn btn-primary btn-flat">Submit</button>
             </div>
