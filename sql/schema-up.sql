@@ -167,75 +167,38 @@ CREATE OR REPLACE TRIGGER trig_att_record_autoincrement
 
 -- Views
 CREATE OR REPLACE VIEW all_class_routines AS
-	SELECT
-		schedules.section_id,
-		schedules.schedule_weekday,
-		schedules.schedule_period,
-		sections.section_name,
-		batches.batch_id,
-		batches.batch_stream,
-		subjects.subject_name,
-		teachers.teacher_name
-	FROM schedules
-	INNER JOIN sections
-		ON sections.section_id = schedules.section_id
-	INNER JOIN batches
-		ON batches.batch_id = sections.batch_id
-	INNER JOIN subjects
-		ON subjects.subject_id = schedules.subject_id
-	INNER JOIN teachers
-		ON teachers.teacher_id = schedules.teacher_id
+	SELECT * FROM SCHEDULES
+    INNER JOIN TEACHERS
+    ON TEACHERS.TEACHER_ID = SCHEDULES.TEACHER_ID
+    INNER JOIN SUBJECTS
+    ON SUBJECTS.SUBJECT_ID = SCHEDULES.SUBJECT_ID
+    ORDER BY SCHEDULE_WEEKDAY ASC, SCHEDULE_PERIOD ASC
 WITH READ ONLY;
 
 CREATE OR REPLACE VIEW all_teacher_routines AS
-	SELECT
-		schedules.teacher_id,
-		schedules.schedule_weekday,
-		schedules.schedule_period,
-		teachers.teacher_name,
-		subjects.subject_name,
-		sections.section_name,
-		batches.batch_id,
-		batches.batch_stream
-	FROM
-		schedules
-	INNER JOIN subjects
-		ON schedules.subject_id = subjects.subject_id
-	INNER JOIN sections
-		ON schedules.section_id = sections.section_id
-	INNER JOIN batches
-		ON sections.batch_id = batches.batch_id
-	INNER JOIN teachers
-		ON schedules.teacher_id = teachers.teacher_id
+	SELECT * FROM SCHEDULES
+    INNER JOIN SECTIONS
+    ON SECTIONS.SECTION_ID = SCHEDULES.SECTION_ID
+    INNER JOIN BATCHES
+    ON BATCHES.BATCH_ID = SECTIONS.BATCH_ID
+    INNER JOIN SUBJECTS
+    ON SUBJECTS.SUBJECT_ID = SCHEDULES.SUBJECT_ID
+    ORDER BY SCHEDULE_WEEKDAY ASC, SCHEDULE_PERIOD ASC
 WITH READ ONLY;
 
 CREATE OR REPLACE VIEW attendance_list AS
-	SELECT
-		attendance_records.schedule_id,
-		attendance_records.student_id,
-		attendance_records.attendance_record_value,
-		attendance_records.attendance_record_date,
-		schedules.section_id,
-		schedules.schedule_weekday,
-		schedules.schedule_period,
-		schedules.subject_id,
-		subjects.subject_name,
-		students.student_name,
-		teachers.teacher_name,
-		teachers.teacher_code,
-		sections.section_name
-	FROM
-		schedules
-	INNER JOIN sections
-		ON schedules.section_id = sections.section_id
-	INNER JOIN subjects
-		ON schedules.subject_id = subjects.subject_id
-	INNER JOIN teachers
-		ON schedules.teacher_id = teachers.teacher_id
-	INNER JOIN attendance_records
-		ON schedules.schedule_id = attendance_records.schedule_id
-	INNER JOIN students
-		ON attendance_records.student_id = students.student_id
+	SELECT * FROM (SELECT ATTENDANCE_RECORD_DATE, COUNT(ATTENDANCE_RECORD_ID) AS NUM_STUDENTS, ATTENDANCE_RECORDS.SCHEDULE_ID FROM ATTENDANCE_RECORDS
+	GROUP BY ATTENDANCE_RECORD_DATE, ATTENDANCE_RECORDS.SCHEDULE_ID) REC
+	INNER JOIN SCHEDULES
+	ON SCHEDULES.SCHEDULE_ID = REC.SCHEDULE_ID
+	INNER JOIN TEACHERS
+	ON TEACHERS.TEACHER_ID = SCHEDULES.TEACHER_ID
+	INNER JOIN SUBJECTS
+	ON SUBJECTS.SUBJECT_ID = SCHEDULES.SUBJECT_ID
+	INNER JOIN SECTIONS
+	ON SECTIONS.SECTION_ID = SCHEDULES.SECTION_ID
+	INNER JOIN BATCHES
+	ON BATCHES.BATCH_ID = SECTIONS.BATCH_ID
 WITH READ ONLY;
 
 -- Procedures
