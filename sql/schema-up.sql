@@ -53,7 +53,7 @@ CREATE TABLE attendance_records (
 	attendance_record_id NUMBER NOT NULL,
 	student_id NUMBER NOT NULL CONSTRAINT att_records_student_id_fkey REFERENCES students(student_id),
 	schedule_id NUMBER NOT NULL CONSTRAINT att_records_schedule_id_fkey REFERENCES schedules(schedule_id),
-	attendance_record_value NUMBER(1) DEFAULT 0,
+	attendance_record_value NUMBER(1) DEFAULT 1,
 	attendance_record_date DATE NOT NULL,
 	CONSTRAINT attendance_id_pkey PRIMARY KEY ( attendance_record_id )
 );

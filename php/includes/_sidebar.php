@@ -66,15 +66,9 @@
                 <i class="fa fa-bar-chart fa-fw"></i> <span>Attendance Records</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="attendance-read.php"><i class="fa fa-circle-o"></i> Read</a></li>
-                <li><a href="attendance-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
-                <li><a href="attendance-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
+                <li><a href="attendance-list.php"><i class="fa fa-circle-o fa-fw"></i> View Attendance Records</a></li>
+                <li><a href="attendance-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Attendance Record</a></li>
               </ul>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-bar-chart"></i> <span>View Attendance Records</span>
-              </a>
             </li>
           </ul>
         </section>

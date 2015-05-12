@@ -1,15 +1,15 @@
 <?php require_once('includes/config.php'); ?>
 <?php require_once('includes/db-connect.php'); ?>
 <?php global $TITLE, $SITE_ROOT, $conn; ?>
-<?php $TITLE = "Take Attendance"; ?>
+<?php $TITLE = "Add Attendance Records"; ?>
 <?php
   if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $conn->prepare("CALL add_student ( :section, :name, :email, :phone, :semester )");
-    $stmt->bindParam(':section', $_POST['section-id'], PDO::PARAM_STR );
-    $stmt->bindParam(':name', $_POST['student-name'], PDO::PARAM_STR );
-    $stmt->bindParam(':email', $_POST['student-email'], PDO::PARAM_STR );
-    $stmt->bindParam(':phone', $_POST['student-phone'], PDO::PARAM_STR );
-    $stmt->bindParam(':semester', $_POST['semester'], PDO::PARAM_STR );
+    $stmt = $conn->prepare("SELECT * FROM STUDENTS
+    WHERE SECTION_ID IN (
+    SELECT SECTION_ID FROM SCHEDULES
+    WHERE SCHEDULE_ID = :id
+    )");
+    $stmt->bindParam(':id', $_POST['schedule-id'], PDO::PARAM_STR );
     if( $stmt->execute() ) {
       $updated = true;
       $error = false;
@@ -18,6 +18,7 @@
       $updated = false;
       $error = true;
     }
+      $students = $stmt->fetchAll();
   }
 ?>
 <!DOCTYPE html>

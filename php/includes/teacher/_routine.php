@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Student Routine
+      Teacher Routine
       <?php if($_SERVER["REQUEST_METHOD"] == "GET") { ?>
       <small>Please fill in the details</small>
       <?php } ?>
