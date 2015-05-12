@@ -39,6 +39,7 @@
               <ul class="treeview-menu">
                 <li><a href="teacher-list.php"><i class="fa fa-circle-o fa-fw"></i> View All Teachers</a></li>
                 <li><a href="teacher-add.php"><i class="fa fa-circle-o fa-fw"></i> Add Teacher</a></li>
+                <li><a href="teacher-routine.php"><i class="fa fa-circle-o fa-fw"></i> View Teacher Routine</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -69,11 +70,6 @@
                 <li><a href="attendance-add.php"><i class="fa fa-circle-o"></i> Add</a></li>
                 <li><a href="attendance-update.php"><i class="fa fa-circle-o"></i> Update</a></li>
               </ul>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-calendar-o"></i> <span>Teacher Routine</span>
-              </a>
             </li>
             <li>
               <a href="#">

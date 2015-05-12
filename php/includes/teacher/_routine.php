@@ -10,8 +10,8 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?= $SITE_ROOT ?>"><i class="fa fa-home"></i> Home</a></li>
-      <li><a href="#">Students</a></li>
-      <li class="active">Student Routine</li>
+      <li><a href="#">Teachers</a></li>
+      <li class="active">Teacher Routine</li>
     </ol>
   </section>
 
@@ -35,18 +35,22 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header">
-            <h3 class="box-title">Batch & Section Details</h3>
+            <h3 class="box-title">Teacher Details</h3>
           </div><!-- /.box-header -->
           <!-- form start -->
           <form role="form" method="post" action="<?= $_SERVER["PHP_SELF"] ?>">
             <div class="box-body">
                 <div class="form-group">
-                    <label for="section-id">Section</label>
-                    <select class="form-control" id="section-id" name="section-id">
-                        <?php $sections = $conn->query("SELECT * FROM SECTIONS INNER JOIN BATCHES ON BATCHES.batch_id = SECTIONS.batch_id "); ?>
-                        <?php foreach ( $sections as $section ) { ?>
-                            <option value="<?= $section["SECTION_ID"] ?>">
-                                Section <?= $section["SECTION_NAME"] ?> - Batch of <?= $section["BATCH_YEAR_PASSOUT"] ?>, <?= $section["BATCH_STREAM"] ?>
+                    <label for="teacher-id">Teacher</label>
+                    <select class="form-control" id="teacher-id" name="teacher-id">
+                        <?php $teachers = $conn->query("SELECT DISTINCT SCHEDULES.TEACHER_ID, TEACHERS.TEACHER_NAME, TEACHERS.TEACHER_CODE
+                        FROM SCHEDULES
+                        INNER JOIN TEACHERS
+                        ON TEACHERS.TEACHER_ID = SCHEDULES.TEACHER_ID
+                        ORDER BY TEACHER_ID ASC"); ?>
+                        <?php foreach ( $teachers as $teacher ) { ?>
+                            <option value="<?= $teacher["TEACHER_ID"] ?>">
+                                <?= $teacher["TEACHER_NAME"] ?> (<?= $teacher["TEACHER_CODE"] ?>)
                             </option>
                         <?php } ?>
                     </select>
@@ -61,7 +65,7 @@
         <?php if($_SERVER["REQUEST_METHOD"] == "POST") { ?>
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Section Routine</h3>
+                    <h3 class="box-title">Teacher Routine</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <table id="routine-table" class="table table-bordered table-striped table-hover">
@@ -88,7 +92,7 @@
                                     <?php foreach( $routines as $routine ) { ?>
                                         <?php if( $routine["SCHEDULE_WEEKDAY"] == $days_of_week[$i] && $routine["SCHEDULE_PERIOD"] == $j ) { ?>
                                             <strong><?= $routine["SUBJECT_NAME"] ?> <small>(<?= $routine["SUBJECT_CODE"] ?>)</small></strong><br>
-                                            <?= $routine["TEACHER_NAME"] ?> <small>(<?= $routine["TEACHER_CODE"] ?>)</small>
+                                            Batch of <?= $routine["BATCH_YEAR_PASSOUT"] ?>, <?= $routine["BATCH_STREAM"] ?> <small>(Section <?= $routine["SECTION_NAME"] ?>)</small>
                                             <?php break; ?>
                                         <?php } ?>
                                     <?php } ?>
